@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from "react";
 import GameBoard from "./GameBoard";
 import useWebSocket from "react-use-websocket";
 import styles from "./GameScreen.module.css";
+import ServerMessage from "./ServerMessage";
 
 interface Player {
   name: string,
@@ -51,6 +52,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   const lastInterpretedMessage = useRef<any>({});
 
+  const [serverMessages, setServerMessages] = useState<string[]>([]);
+
   words[currentRow.current] = currentWord;
 
   /* console.log("players: ");
@@ -63,6 +66,17 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
 
   // awesome!
+
+  const removeMessage = () => {
+    serverMessages.splice(0, 1)
+    setServerMessages(serverMessages);
+  }
+
+  const displayServerMessage = (message: string) => {
+    serverMessages.push(message);
+    setServerMessages(serverMessages);
+    setTimeout(removeMessage, 3000);
+  }
 
   const handleMessage = (message: any) => {
     console.log("msg: ");
@@ -97,7 +111,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
     }
 
     if (message.id == 9) {
-
+      displayServerMessage(message.message);
     }
 
     lastInterpretedMessage.current = message;
@@ -137,6 +151,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
   }
 
   return (
+    <>
     <div className={styles['game-screen']}>
       <GameBoard
         words={words}
@@ -144,6 +159,12 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
       />
       {(self.current != null && self.current.isHost && !game.current.started) && <button onClick={startGame}> start </button>}
     </div>
+    <div className={styles['server-message-box']}>
+      {serverMessages.map((value) => {
+        return <ServerMessage key={value} message={value}/>
+      })}
+    </div>
+    </>
   );
 };
 

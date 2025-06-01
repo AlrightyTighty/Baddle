@@ -6,3 +6,11 @@
   justify-content: center;
   position: absolute;
 }
+
+.server-message-box {
+  position: absolute;
+  width: 3200px;
+  height: 100vh;
+  display: flex;
+  right: 0;
+}

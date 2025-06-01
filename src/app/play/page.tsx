@@ -29,7 +29,7 @@ export default function Game() {
     makeRoom = "";
 
   return (
-    <main className={styles['page']}>
+    <main>
       <GameScreen queryParams={{ name: name, roomCode: roomCode, makeRoom: makeRoom }} />
     </main>
   );
