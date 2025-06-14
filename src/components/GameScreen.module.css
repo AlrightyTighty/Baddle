@@ -9,8 +9,11 @@
 
 .server-message-box {
   position: absolute;
-  width: 3200px;
+  width: 300px;
   height: 100vh;
   display: flex;
   right: 0;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 5px;
 }

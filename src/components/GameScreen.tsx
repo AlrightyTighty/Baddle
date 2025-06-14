@@ -5,8 +5,9 @@ import GameBoard from "./GameBoard";
 import useWebSocket from "react-use-websocket";
 import styles from "./GameScreen.module.css";
 import ServerMessage from "./ServerMessage";
+import PlayerList from "./PlayerList";
 
-interface Player {
+export interface Player {
   name: string,
   bestGuessHint: number[],
   isHost: boolean,
@@ -67,20 +68,32 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   // awesome!
 
-  const removeMessage = () => {
-    serverMessages.splice(0, 1)
-    setServerMessages(serverMessages);
+  const removeMessage = (messages: string[]) => {
+    const newMessages = [...messages];
+    newMessages.splice(0, 1);
+    return newMessages;
   }
 
   const displayServerMessage = (message: string) => {
     serverMessages.push(message);
     setServerMessages(serverMessages);
-    setTimeout(removeMessage, 3000);
+    setTimeout(() => {
+      setServerMessages(serverMessages => removeMessage(serverMessages));
+    }, 3000);
   }
 
+
+
   const handleMessage = (message: any) => {
-    console.log("msg: ");
-    console.log(message);
+    // console.log("msg: ");
+    // console.log(message);
+    if (message.id == 5) {
+      const playerIndex = players.current.findIndex(player => player.uuid == message.uuid);
+      const newPlayers = [...players.current];
+      newPlayers[playerIndex] = message.player;
+      players.current = newPlayers;
+    }
+
     if (message.id == 7) {
       players.current = message.players;
       if (self.current == null)
@@ -103,11 +116,14 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
     }
 
     if (message.id == 8) {
+      if (!players.current) return;
       game.current.started = true;
       setHints([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]);
       setWords(['', '', '', '', '', '']);
+      for (const player of players.current)
+        player.bestGuessHint = [1, 1, 1, 1, 1];
       currentRow.current = 0;
-      console.log("Game Starting!")
+      displayServerMessage("Round Starting!");
     }
 
     if (message.id == 9) {
@@ -152,18 +168,19 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   return (
     <>
-    <div className={styles['game-screen']}>
-      <GameBoard
-        words={words}
-        hints={hints}
-      />
-      {(self.current != null && self.current.isHost && !game.current.started) && <button onClick={startGame}> start </button>}
-    </div>
-    <div className={styles['server-message-box']}>
-      {serverMessages.map((value) => {
-        return <ServerMessage key={value} message={value}/>
-      })}
-    </div>
+      <div className={styles['game-screen']}>
+        <GameBoard
+          words={words}
+          hints={hints}
+        />
+        {(self.current != null && self.current.isHost && !game.current.started) && <button onClick={startGame}> start </button>}
+      </div>
+      <div className={styles['server-message-box']}>
+        {serverMessages.map((value) => {
+          return <ServerMessage key={value} message={value} />
+        })}
+      </div>
+      <PlayerList players={players.current} />
     </>
   );
 };

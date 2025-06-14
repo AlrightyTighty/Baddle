@@ -1,0 +1,59 @@
+.player-list {
+  width: 418px;
+  height: 900px;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-content: flex-start;
+}
+
+.player-list-item {
+  width: 100%;
+  height: 98px;
+  background-color: #938bb4;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.player-icon {
+  height: 77%;
+  padding-left: 8px;
+}
+
+.name-and-best-hint {
+  width: 250px;
+  height: 76px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.name-and-best-hint p {
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-family: sans-serif;
+  font-size: 20pt;
+  margin: 0;
+  height: 50%;
+}
+
+.score-text {
+  font-size: 32pt;
+  margin: 0;
+  font-family: sans-serif;
+  color: white;
+}
+
+.best-guess-display {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 1.5%;
+}
