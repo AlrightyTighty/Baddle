@@ -7,7 +7,7 @@ interface LetterProps {
     color: number;
 }
 
-const COLORS = ["#404253", "#404253", "#CDCD2E", "#49BA56", "#49BA56"];
+const COLORS = ["#5b5e80", "#404253", "#CDCD2E", "#49BA56", "#49BA56"];
 
 const Letter: React.FC<LetterProps> = ({ letter, color }) => {
     return (

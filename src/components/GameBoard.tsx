@@ -15,7 +15,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ words, hints }) => {
         return word.padEnd(5, " ").split("").map((char, col) => {
           return (
             <div className="grid-letter-container">
-              <Letter color={hints[row][col]} letter={char} />
+              <Letter key={"" + row + col} color={hints[row][col]} letter={char} />
             </div>
           );
         });

@@ -5,6 +5,7 @@ interface ConnectionInfo {
     roomCode: string;
     makeRoom: boolean;
     name: string;
+    icon: number;
 }
 
 interface HomeButtonsProps {
@@ -34,7 +35,8 @@ const HomeButtons: React.FC<HomeButtonsProps> = ({ setConnectionInfo }) => {
                     {
                         roomCode: code.toString(),
                         makeRoom: false,
-                        name: name
+                        name: name,
+                        icon: 0
                     }
                 );
             }}>

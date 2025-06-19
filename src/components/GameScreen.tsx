@@ -6,6 +6,7 @@ import useWebSocket from "react-use-websocket";
 import styles from "./GameScreen.module.css";
 import ServerMessage from "./ServerMessage";
 import PlayerList from "./PlayerList";
+import Keyboard from "./Keyboard";
 
 export interface Player {
   name: string,
@@ -34,6 +35,12 @@ interface GameScreenProps {
   queryParams: { name: string; makeRoom: string; roomCode: string };
 }
 
+const test_keyboard: { [key: string]: number } = {}
+
+for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
+  test_keyboard[letter] = Math.round(0);
+}
+
 const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   const WS_URL = "ws://localhost:3001";
@@ -41,11 +48,12 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
     queryParams: queryParams
   });
 
+  const [keyStates, setKeyStates] = useState(test_keyboard);
   const players = useRef([] as Player[]);
   const game = useRef({} as Game);
   const self = useRef(null as Player | null);
 
-  const [hints, setHints] = useState([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]);
+  const [hints, setHints] = useState([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]);
   const [words, setWords] = useState(['', '', '', '', '', '']);
 
   const currentRow = useRef(0);
@@ -112,16 +120,22 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
       setHints(hints);
       setWords(words);
       setCurrentWord("");
+      for (let i = 0; i < 5; i++) {
+        keyStates[message.guess[i].toUpperCase()] = message.hints[i];
+      }
+
+      setKeyStates(keyStates)
       currentRow.current += 1;
     }
 
     if (message.id == 8) {
       if (!players.current) return;
       game.current.started = true;
-      setHints([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]);
+      setHints([[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]);
       setWords(['', '', '', '', '', '']);
+      setKeyStates(Object.assign({}, test_keyboard));
       for (const player of players.current)
-        player.bestGuessHint = [1, 1, 1, 1, 1];
+        player.bestGuessHint = [0, 0, 0, 0, 0];
       currentRow.current = 0;
       displayServerMessage("Round Starting!");
     }
@@ -169,10 +183,13 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
   return (
     <>
       <div className={styles['game-screen']}>
-        <GameBoard
-          words={words}
-          hints={hints}
-        />
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", width: "520px", gap: "60px", marginTop: "80px" }}>
+          <GameBoard
+            words={words}
+            hints={hints}
+          />
+          <Keyboard keys={keyStates} />
+        </div>
         {(self.current != null && self.current.isHost && !game.current.started) && <button onClick={startGame}> start </button>}
       </div>
       <div className={styles['server-message-box']}>
@@ -180,6 +197,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
           return <ServerMessage key={value} message={value} />
         })}
       </div>
+
       <PlayerList players={players.current} />
     </>
   );
