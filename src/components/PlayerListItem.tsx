@@ -1,8 +1,20 @@
 import React from 'react'
 import { Player } from './GameScreen'
+import Image from 'next/image'
 import Letter from './Letter';
 
 import styles from "./PlayerListItem.module.css"
+
+import pi1 from '../../public/player_icons/pi1.png'
+import pi2 from '../../public/player_icons/pi2.png'
+import pi3 from '../../public/player_icons/pi3.png'
+import pi4 from '../../public/player_icons/pi4.png'
+import pi5 from '../../public/player_icons/pi5.png'
+import pi6 from '../../public/player_icons/pi6.png'
+import pi7 from '../../public/player_icons/pi7.png'
+import pi8 from '../../public/player_icons/pi8.png'
+
+const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8]
 
 interface PlayerListItemProps {
     player: Player;
@@ -11,8 +23,8 @@ interface PlayerListItemProps {
 const PlayerListItem: React.FC<PlayerListItemProps> = ({ player }) => {
     return (
         <li className={styles['player-list-item']}>
-            <img className={styles["player-icon"]}
-                src="https://cdn.discordapp.com/attachments/1371521144162619485/1378756011594092647/image.png?ex=683dc219&is=683c7099&hm=e33338add06cdb8ad4ffb28f30a0bb5283188e9abd33289d5e17d72a80329119&"
+            <Image alt="player-icon" className={styles["player-icon"]}
+                src={icons[player.icon]}
             />
             <div className={styles["name-and-best-hint"]}>
                 <p>

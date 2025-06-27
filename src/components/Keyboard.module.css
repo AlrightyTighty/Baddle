@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 600px;
-  height: 300px;
+  height: 160px;
   gap: 5px;
   align-content: flex-start;
 }

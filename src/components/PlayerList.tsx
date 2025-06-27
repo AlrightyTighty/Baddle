@@ -7,6 +7,7 @@ interface PlayerListProps {
     players: Player[];
 }
 
+
 const PlayerList: React.FC<PlayerListProps> = ({ players }) => {
     return (
         <ul className={styles['player-list']}>

@@ -26,7 +26,8 @@ const HomeButtons: React.FC<HomeButtonsProps> = ({ setConnectionInfo }) => {
                     setConnectionInfo({
                         roomCode: "",
                         makeRoom: true,
-                        name: name
+                        name: name,
+                        icon: 0
                     })
                     return;
                 }
@@ -40,9 +41,9 @@ const HomeButtons: React.FC<HomeButtonsProps> = ({ setConnectionInfo }) => {
                     }
                 );
             }}>
-                <input type="text" className="name-field" name="name" />
+                <input autoComplete="off" type="text" className="name-field" name="name" />
                 <input type="submit" className="join-button" value="Join Room" />
-                <input type="text" name="room-code" className="room-code" />
+                <input autoComplete="off" type="text" name="room-code" className="room-code" />
                 <input type="submit" onClick={() => { host = true }} value="Host Room" className="host-button" />
             </form>
 

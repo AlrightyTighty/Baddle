@@ -16,8 +16,9 @@ export default function Game() {
   let makeRoom = game_info.get('makeRoom');
   let roomCode = game_info.get('roomCode');
   const name = game_info.get('name');
+  const icon = game_info.get('icon');
 
-  if (!name || (!roomCode && !makeRoom)) {
+  if (!name || (!roomCode && !makeRoom) || !icon || Number.isNaN(parseInt(icon))) {
     router.push("/");
     return;
   }
@@ -30,7 +31,7 @@ export default function Game() {
 
   return (
     <main>
-      <GameScreen queryParams={{ name: name, roomCode: roomCode, makeRoom: makeRoom }} />
+      <GameScreen queryParams={{ name: name, roomCode: roomCode, makeRoom: makeRoom, selectedIcon: parseInt(icon) }} />
     </main>
   );
 }

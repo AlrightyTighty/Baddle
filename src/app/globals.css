@@ -2,6 +2,7 @@ body {
   background-image: url("../../public/baddle background.png");
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
+  background-attachment: fixed;
 }
 
 @font-face {
