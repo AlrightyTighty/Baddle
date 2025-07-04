@@ -33,7 +33,5 @@ function Game() {
 }
 
 export default function GamePage() {
-  <Suspense>
-    <Game />
-  </Suspense>
+  return (<Suspense> <Game /> </Suspense>);
 }
