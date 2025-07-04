@@ -29,13 +29,13 @@ const Chatbar: FC<ChatbarProps> = ({ messages, toggleChatbarActive, sendMessage 
     return (
         <div className={styles["chatbox"]}>
             <div className={styles["chat-messages"]}>
-                {messages.map((msgText) => {
-                    return <p className={styles["chat-message"]}>{msgText}</p>;
+                {messages.map((msgText, index) => {
+                    return <p key={index} className={styles["chat-message"]}>{msgText}</p>;
                 })}
             </div>
             <form ref={form} className={styles["chat-message-entry"]} action={
                 (formData: FormData) => {
-                    let val = formData.get('messageInput');
+                    const val = formData.get('messageInput');
                     if (!val) return
                     sendMessage(val.toString())
                 }

@@ -12,7 +12,7 @@ const PlayerList: React.FC<PlayerListProps> = ({ players }) => {
     return (
         <ul className={styles['player-list']}>
             {players.map((player) => {
-                return <PlayerListItem player={player} />
+                return <PlayerListItem key={player.uuid} player={player} />
             })}
         </ul>
     )

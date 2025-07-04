@@ -1,14 +1,10 @@
 "use client"
 
-import Image from "next/image";
-import styles from "./page.module.css";
-
 import GameScreen from "@/components/GameScreen";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense } from "react";
 
-
-export default function Game() {
+function Game() {
 
   const game_info = useSearchParams();
   const router = useRouter();
@@ -34,4 +30,10 @@ export default function Game() {
       <GameScreen queryParams={{ name: name, roomCode: roomCode, makeRoom: makeRoom, selectedIcon: parseInt(icon) }} />
     </main>
   );
+}
+
+export default function GamePage() {
+  <Suspense>
+    <Game />
+  </Suspense>
 }

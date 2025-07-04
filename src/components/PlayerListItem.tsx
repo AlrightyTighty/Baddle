@@ -13,8 +13,11 @@ import pi5 from '../../public/player_icons/pi5.png'
 import pi6 from '../../public/player_icons/pi6.png'
 import pi7 from '../../public/player_icons/pi7.png'
 import pi8 from '../../public/player_icons/pi8.png'
+import pi9 from '../../public/player_icons/pi9.png'
+import pi10 from '../../public/player_icons/pi10.png'
+import pi11 from '../../public/player_icons/fariha_icon.png'
 
-const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8]
+const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8, pi9, pi10, pi11]
 
 interface PlayerListItemProps {
     player: Player;
@@ -32,7 +35,7 @@ const PlayerListItem: React.FC<PlayerListItemProps> = ({ player }) => {
                 </p>
                 <div className={styles["best-guess-display"]}>
                     {player.bestGuessHint.map((val, index) => {
-                        return <div style={{ width: "16%", aspectRatio: "1:1" }}>
+                        return <div key={index} style={{ width: "16%", aspectRatio: "1:1" }}>
                             <Letter letter="" color={val} key={index} />
                         </div>
                     })}

@@ -13,7 +13,7 @@ const Keyboard: React.FC<KeyboardProps> = ({ keys }) => {
     <div className={styles['keyboard']}>
       {ROWS.map((row, index) => {
         return <div key={"row" + index} className={styles['keyboard-row']}>
-          {row.split('').map((letter, index) => {
+          {row.split('').map((letter) => {
             return <div key={letter} className={styles['key']}>
               <Letter key={letter} letter={letter} color={keys[letter]} />
             </div>

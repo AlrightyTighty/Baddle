@@ -23,3 +23,14 @@
   right: 20px;
   bottom: 20px;
 }
+
+.timer {
+  position: absolute;
+  z-index: 4;
+  bottom: 5%;
+  left: 3%;
+  margin: 0;
+  font-family: inter;
+  color: white;
+  font-size: 64pt;
+}

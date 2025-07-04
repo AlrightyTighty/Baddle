@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from "./HomeButtons.module.css"
 
 interface ConnectionInfo {
     roomCode: string;

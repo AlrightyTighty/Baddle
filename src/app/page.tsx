@@ -3,8 +3,6 @@ import styles from "./page.module.css";
 
 import baddle_icon from "../../public/baddle icon.png"
 
-import GameBoard from "@/components/GameBoard";
-import GameScreen from "@/components/GameScreen";
 import GameAndButtons from "@/components/GameAndButtons";
 
 export default function Home() {

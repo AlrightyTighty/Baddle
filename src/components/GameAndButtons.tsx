@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
-import GameScreen from './GameScreen'
 import { useRouter } from 'next/navigation'
 import HomeButtons from './HomeButtons';
 import IconSelection from './IconSelection';
@@ -18,7 +17,6 @@ import pi8 from '../../public/player_icons/pi8.png'
 const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8]
 
 const GameAndButtons = () => {
-    const [gameScreenVisible, setGameScreenVisible] = useState(false);
     const [loginInfo, setLoginInfo] = useState({ roomCode: "", makeRoom: false, name: "", icon: 0 })
 
     const [selectedIcon, setSelectedIcon] = useState(0);
