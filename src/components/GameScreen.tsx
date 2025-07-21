@@ -201,14 +201,16 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
     if (message.id == 10) {
       game.current.started = false;
-      for (let i = 0; i < players.current.length; i++) {
-        players.current[i].bestGuessHint = [0, 0, 0, 0, 0];
-        players.current[i].score = 0;
-      }
 
       setShowPodium(true);
 
-      setTimeout(() => setShowPodium(false), 6000)
+      setTimeout(() => {
+        setShowPodium(false);
+        for (let i = 0; i < players.current.length; i++) {
+          players.current[i].bestGuessHint = [0, 0, 0, 0, 0];
+          players.current[i].score = 0;
+        }
+      }, 6000)
     }
 
     lastInterpretedMessage.current = message;

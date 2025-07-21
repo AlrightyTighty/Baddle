@@ -1,0 +1,76 @@
+.user-info-form {
+  width: 600px;
+  margin: 60px auto auto;
+}
+
+.name-input {
+  width: 416px;
+  height: 57px;
+  display: block;
+  border-radius: 16px;
+}
+
+.code-input {
+  width: 312px;
+  height: 57px;
+  border-radius: 16px 0 0 16px;
+  display: inline-block;
+}
+
+.code-submit {
+  width: 104px;
+  height: 57px;
+  border-radius: 0 16px 16px 0;
+  display: inline-block;
+  background-color: #6d6f8b;
+  color: white;
+  margin: auto;
+  font-size: 24pt;
+  text-align: center;
+  border-color: transparent;
+  padding: 0;
+  border-width: 0;
+}
+
+.uif-text-input {
+  margin: auto;
+  background-color: #e2e3ee;
+  font-size: 24pt;
+  text-align: center;
+  border-color: transparent;
+  padding: 0;
+  border-width: 0;
+}
+
+.uif-code-input {
+  margin: auto;
+  width: fit-content;
+}
+
+.uif-text-input::placeholder {
+  color: #989898;
+}
+
+.or-text {
+  font-size: 24pt;
+  color: white;
+  margin: auto;
+  font-family: sans-serif;
+  width: fit-content;
+  margin: 0.5em auto;
+}
+
+.host-submit {
+  width: 209px;
+  height: 57px;
+  border-radius: 16px;
+  display: block;
+  background-color: #6d6f8b;
+  color: white;
+  margin: auto;
+  font-size: 24pt;
+  text-align: center;
+  border-color: transparent;
+  padding: 0;
+  border-width: 0;
+}
