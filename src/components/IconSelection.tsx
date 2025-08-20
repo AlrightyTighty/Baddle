@@ -18,8 +18,10 @@ import pi8 from '../../public/player_icons/pi8.png'
 import pi9 from '../../public/player_icons/pi9.png'
 import pi10 from '../../public/player_icons/pi10.png'
 import pi11 from '../../public/player_icons/fariha_icon.png'
+import pi12 from '../../public/player_icons/cutze.gif'
+import pi13 from '../../public/player_icons/potato.png'
 
-export const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8, pi9, pi10, pi11]
+export const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8, pi9, pi10, pi11, pi12, pi13]
 
 interface IconSelectionProps {
     selectedIcon: number;

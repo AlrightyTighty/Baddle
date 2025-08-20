@@ -15,7 +15,7 @@ import pi9 from '../../public/player_icons/pi9.png'
 import pi10 from '../../public/player_icons/pi10.png'
 import pi11 from '../../public/player_icons/fariha_icon.png'
 
-const icons = [pi1, pi2, pi3, pi4, pi5, pi6, pi7, pi8, pi9, pi10, pi11]
+import { icons } from './IconSelection';
 
 interface WinscreenProps {
     winner1: Player;

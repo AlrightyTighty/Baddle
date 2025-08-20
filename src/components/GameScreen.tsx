@@ -46,7 +46,7 @@ for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
 }
 
 const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
-  const WS_URL = "wss://baddle-backend-63991322723.us-south1.run.app";
+  const WS_URL = "wss://baddle-63991322723.us-south1.run.app/api/play";
 
   if (queryParams.name.toLowerCase() == "tralalero tralala" || queryParams.name.toLowerCase() == "tralalero")
     queryParams.selectedIcon = 8;
@@ -56,6 +56,12 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   if (queryParams.name.toLowerCase() == "fariha" || queryParams.name.toLowerCase() == "fariri")
     queryParams.selectedIcon = 10;
+
+  if (queryParams.name.toLocaleLowerCase() == "cutze")
+    queryParams.selectedIcon = 11;
+
+  if (queryParams.name.toLocaleLowerCase() == "potatogod9001")
+    queryParams.selectedIcon = 12;
 
   const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL, {
     queryParams: queryParams,
