@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    pgPassword: "npg_L3ZYcwBUJQ5d",
+  },
 };
 
 export default nextConfig;

@@ -10,12 +10,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/config": "^3.3.5",
     "@types/papaparse": "^5.3.16",
+    "@types/pg": "^8.15.5",
     "@types/socket.io": "^3.0.2",
     "@types/ws": "^8.18.1",
+    "bcrypt": "^6.0.0",
+    "config": "^3.3.12",
     "next": "15.3.2",
     "next-ws": "^2.0.12",
     "papaparse": "^5.5.3",
+    "pg": "^8.16.3",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
