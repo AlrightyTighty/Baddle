@@ -1,5 +1,6 @@
 import { Client, QueryResult } from "pg";
 import { genSalt, hash } from "bcrypt";
+import { v4 } from "uuid";
 
 const NUM_SALT_ROUNDS = 10;
 
@@ -29,6 +30,42 @@ export const createUser = async (
     result = await client.query(
       'INSERT INTO "user"(username, email, password, verified) VALUES($1, $2, $3, FALSE) RETURNING "id", "username", "email"',
       [username, email, hashedPassword]
+    );
+  } catch (e) {
+    console.log(e);
+  }
+  await client.end();
+  return result;
+};
+
+export const getUserInfo = async (userId: number) => {
+  const client = createClient();
+  await client.connect();
+  let result: QueryResult<any> | null = null;
+  try {
+    result = await client.query('SELECT * FROM "user" WHERE id=$1', [userId]);
+  } catch (e) {
+    console.log(e);
+  }
+  await client.end();
+  return result;
+};
+
+export const makeVerificationLink = async (userId: number) => {
+  const client = createClient();
+
+  let result: QueryResult<any> | null = null;
+  let verificationCode = v4();
+  try {
+    await client.connect();
+    result = await client.query(
+      `INSERT INTO "verification_code" (verification_code, user_id, time_issued)
+      VALUES($1, $2, NOW())
+      ON CONFLICT ("user_id") DO UPDATE SET
+        verification_code = excluded.verification_code,
+        time_issued = NOW()
+      RETURNING "verification_code"`,
+      [verificationCode, userId]
     );
   } catch (e) {
     console.log(e);
