@@ -73,3 +73,11 @@ export const makeVerificationLink = async (userId: number) => {
   await client.end();
   return result;
 };
+
+export const queryDB = async <Type,>(query: string, params: any[]) => {
+  const client = createClient();
+  await client.connect();
+  const result: Type[] = (await client.query(query, params)).rows;
+  client.end();
+  return result;
+};

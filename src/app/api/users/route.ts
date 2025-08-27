@@ -15,7 +15,10 @@ const PASSWORD_VERIFY_REGEX =
 const EMAIL_VERIFY_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
 export const POST = async (request: NextRequest) => {
-  const body: UserInfo = await request.json();
+  const userInfoHeader = request.headers.get("x-user-info");
+  if (!userInfoHeader)
+    return new Response("how did you even manage that", { status: 400 });
+  const body: UserInfo = JSON.parse(userInfoHeader);
   if (!body.username)
     return new Response("A username must be provided.", { status: 400 });
   if (!body.email)
