@@ -1,13 +1,12 @@
-"use client"
-import React, { useRef } from 'react'
-import { useState } from 'react'
+"use client";
+import React, { useRef } from "react";
+import { useState } from "react";
 
-import styles from "./UserInfoForm.module.css"
-import IconSelection from './IconSelection';
-import { useRouter } from 'next/navigation';
+import styles from "./UserInfoForm.module.css";
+import IconSelection from "./IconSelection";
+import { useRouter } from "next/navigation";
 
 const UserInfoForm = () => {
-
   let host = false;
 
   const [selectedIcon, setSelectedIcon] = useState(0);
@@ -20,23 +19,51 @@ const UserInfoForm = () => {
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!usernameFieldRef.current || !codeFieldRef.current) return;
-    router.push(`/play?name=${usernameFieldRef.current.value}&makeRoom=${host}&roomCode=${codeFieldRef.current.value}&icon=${selectedIcon}`)
-  }
+    router.push(
+      `/play?name=${usernameFieldRef.current.value}&makeRoom=${host}&roomCode=${codeFieldRef.current.value}&icon=${selectedIcon}`
+    );
+  };
 
   return (
     <form onSubmit={onFormSubmit} className={styles["user-info-form"]}>
-      <input ref={usernameFieldRef} type="text" className={styles["uif-text-input"] + " " + styles["name-input"]} name="username" placeholder="Enter Username" />
-      <IconSelection selectedIcon={selectedIcon} setSelectedIcon={setSelectedIcon} />
+      <input
+        ref={usernameFieldRef}
+        type="text"
+        className={styles["uif-text-input"] + " " + styles["name-input"]}
+        name="username"
+        placeholder="Display Name"
+      />
+      <IconSelection
+        selectedIcon={selectedIcon}
+        setSelectedIcon={setSelectedIcon}
+      />
       <div className={styles["uif-code-input"]}>
-        <input ref={codeFieldRef} type="text" className={styles["uif-text-input"] + " " + styles["code-input"]} name="code" placeholder="Enter Room Code" />
-        <input type="submit" className={styles["code-submit"]} name="join" value="Join" />
+        <input
+          ref={codeFieldRef}
+          type="text"
+          className={styles["uif-text-input"] + " " + styles["code-input"]}
+          name="code"
+          placeholder="Room Code"
+        />
+        <input
+          type="submit"
+          className={styles["code-submit"]}
+          name="join"
+          value="JOIN"
+        />
       </div>
-      <p className={styles["or-text"]}>
-        Or
-      </p>
-      <input type="submit" onClick={() => { host = true }} className={styles["host-submit"]} name="host" value="Host" />
+      <p className={styles["or-text"]}>Or</p>
+      <input
+        type="submit"
+        onClick={() => {
+          host = true;
+        }}
+        className={styles["host-submit"]}
+        name="host"
+        value="HOST"
+      />
     </form>
   );
-}
+};
 
-export default UserInfoForm
+export default UserInfoForm;

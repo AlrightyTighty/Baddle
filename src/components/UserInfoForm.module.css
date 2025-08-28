@@ -1,54 +1,68 @@
-.user-info-form {
-  width: 600px;
-  margin: 60px auto auto;
+@media (min-width: 600) {
+  .user-info-form {
+    width: 600px;
+  }
+}
+
+@media (max-width: 600) {
+  .user-info-form {
+    width: 90vw;
+  }
 }
 
 .name-input {
-  width: 416px;
-  height: 57px;
+  aspect-ratio: 5 / 1;
+  width: 73%;
+  height: auto;
   display: block;
   border-radius: 16px;
 }
 
 .code-input {
-  width: 312px;
-  height: 57px;
+  width: 68%;
+  height: 100%;
   border-radius: 16px 0 0 16px;
   display: inline-block;
 }
 
 .code-submit {
-  width: 104px;
-  height: 57px;
+  width: 32%;
+  height: 100%;
   border-radius: 0 16px 16px 0;
   display: inline-block;
-  background-color: #6d6f8b;
+  background-color: #38394b;
   color: white;
   margin: auto;
-  font-size: 24pt;
+  font-size: 32px;
   text-align: center;
   border-color: transparent;
   padding: 0;
   border-width: 0;
+  font-weight: 600;
+  font-family: inter;
 }
 
 .uif-text-input {
   margin: auto;
-  background-color: #e2e3ee;
-  font-size: 24pt;
+  background-color: white;
+  font-size: 32px;
   text-align: center;
   border-color: transparent;
   padding: 0;
   border-width: 0;
+  font-family: inter;
+  font-weight: 300;
 }
 
 .uif-code-input {
   margin: auto;
-  width: fit-content;
+  width: 73%;
+  aspect-ratio: 5 / 1;
+  height: auto;
 }
 
 .uif-text-input::placeholder {
-  color: #989898;
+  color: #d3d3d3;
 }
 
 .or-text {
@@ -61,16 +75,18 @@
 }
 
 .host-submit {
-  width: 209px;
-  height: 57px;
+  width: 185px;
+  height: 60px;
   border-radius: 16px;
   display: block;
-  background-color: #6d6f8b;
+  background-color: #38394b;
   color: white;
   margin: auto;
-  font-size: 24pt;
+  font-size: 32px;
+  font-family: inter;
   text-align: center;
   border-color: transparent;
   padding: 0;
   border-width: 0;
+  font-weight: 600;
 }
