@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import { createTransport } from "nodemailer";
 import { makeVerificationLink, queryDB } from "../db_handler";
-import { sign } from "jsonwebtoken";
 
 const EMAIL_CONFIG = {
   smtpServer: "smtp.office365.com",
@@ -36,9 +35,16 @@ interface VerificationCodeInfo {
 }
 
 export const POST = async (request: NextRequest) => {
-  const body: UserInfo = await request.json();
+  const userInfo = request.headers.get("x-user-info");
+  if (!userInfo)
+    return new Response("Failed to retrieve user info from headers", {
+      status: 400,
+    });
+  const body: UserInfo = JSON.parse(userInfo).payload;
 
   // create verification link
+
+  console.log(body);
 
   const result = await makeVerificationLink(body.id);
   if (!result) return new Response("Couldn't make code", { status: 500 });

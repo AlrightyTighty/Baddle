@@ -25,10 +25,10 @@ export const createUser = async (
   const hashedPassword = await hash(password, salt);
   const client = createClient();
   await client.connect();
-  let result: QueryResult<any> | null = null;
+  let result: QueryResult | null = null;
   try {
     result = await client.query(
-      'INSERT INTO "user"(username, email, password, verified) VALUES($1, $2, $3, FALSE) RETURNING "id", "username", "email"',
+      'INSERT INTO "user"(username, email, password, verified) VALUES($1, $2, $3, FALSE) RETURNING "id", "username", "email", "verified"',
       [username, email, hashedPassword]
     );
   } catch (e) {

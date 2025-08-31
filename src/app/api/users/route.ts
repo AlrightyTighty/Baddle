@@ -1,12 +1,21 @@
 import { NextRequest } from "next/server";
 import { createUser } from "../db_handler";
+import { SignJWT } from "jose";
+import { QueryResult } from "pg";
 // to create a user:
 // a username, password, and email must be provided.
 
-interface UserInfo {
+interface CreateUserInfo {
   username: string;
   email: string;
   password: string;
+}
+
+interface UserInfo {
+  id: number;
+  username: string;
+  email: string;
+  verified: boolean;
 }
 
 const PASSWORD_VERIFY_REGEX =
@@ -14,11 +23,10 @@ const PASSWORD_VERIFY_REGEX =
 
 const EMAIL_VERIFY_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
+const JWT_PRIVATE_KEY = process.env.jwtPrivateKey;
+
 export const POST = async (request: NextRequest) => {
-  const userInfoHeader = request.headers.get("x-user-info");
-  if (!userInfoHeader)
-    return new Response("how did you even manage that", { status: 400 });
-  const body: UserInfo = JSON.parse(userInfoHeader);
+  const body: CreateUserInfo = await request.json();
   if (!body.username)
     return new Response("A username must be provided.", { status: 400 });
   if (!body.email)
@@ -35,7 +43,11 @@ export const POST = async (request: NextRequest) => {
 
   // ok all the user info is valid, YAY YIPPEEEEEE
 
-  const result = await createUser(body.username, body.email, body.password);
+  const result: QueryResult<UserInfo> | null = await createUser(
+    body.username,
+    body.email,
+    body.password
+  );
 
   if (!result) {
     return new Response("There was an error with registering your account.", {
@@ -43,7 +55,18 @@ export const POST = async (request: NextRequest) => {
     });
   }
 
+  const createdUserInfo: UserInfo = result.rows[0];
+
   console.log(result.rows);
 
-  return new Response(JSON.stringify(result.rows[0]), { status: 200 });
+  const signer = new SignJWT({
+    id: createdUserInfo.id,
+    username: createdUserInfo.username,
+    email: createdUserInfo.email,
+    verified: createdUserInfo.verified,
+  }).setProtectedHeader({ alg: "HS256" });
+
+  const jwt = await signer.sign(new TextEncoder().encode(JWT_PRIVATE_KEY));
+
+  return new Response(jwt, { status: 200 });
 };
