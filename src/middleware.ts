@@ -1,39 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify } from "jose";
-
-interface JwtPayload {
-  id: number;
-  username: string;
-  email: string;
-  verified: boolean;
-}
+import { queryDB } from "./app/api/db_handler";
+import { UserInfo } from "./app/api/users/route";
 
 const authenticate = async (request: NextRequest) => {
-  if (!process.env.jwtPrivateKey)
-    return new NextResponse(
-      "Whoever is running the backend is a moron. TELL THEM TO SET UP A JWT PRIVATE KEY!",
-      { status: 500 }
-    );
-
   const authenticationToken = request.headers.get("Authorization");
 
   console.log("Doing authentication");
 
-  if (!authenticationToken)
-    return new NextResponse("You are not logged in", { status: 401 });
-  try {
-    const user = await jwtVerify(
-      authenticationToken,
-      new TextEncoder().encode(process.env.jwtPrivateKey)
-    );
-    const newHeaders = new Headers(request.headers);
+  if (!authenticationToken) return new NextResponse("You are not logged in", { status: 401 });
 
-    newHeaders.set("x-user-info", JSON.stringify(user));
+  const userInfo = await queryDB<UserInfo>(`SELECT "id", "username", "email", "verified" FROM "user" WHERE "id"=(SELECT user_id FROM session WHERE "id"=$1);`, [authenticationToken]);
 
-    return NextResponse.next({ request: { headers: newHeaders } });
-  } catch (e) {
-    return new NextResponse("You could not be authenticated.", { status: 401 });
-  }
+  if (userInfo.length == 0) return new NextResponse("Invalid session id", { status: 401 });
+
+  const newHeaders = new Headers(request.headers);
+  newHeaders.set("x-user-info", JSON.stringify(userInfo[0]));
+
+  return NextResponse.next({
+    request: {
+      headers: newHeaders,
+    },
+  });
 };
 
 const middlewareMap: {
@@ -48,8 +35,7 @@ export const middleware = async (request: NextRequest) => {
 
   console.log("middleware in use");
 
-  if (path.startsWith("/api/verify") && request.method == "POST")
-    return await authenticate(request);
+  if (path.startsWith("/api/verify") && request.method == "POST") return await authenticate(request);
 
   return NextResponse.next();
 };

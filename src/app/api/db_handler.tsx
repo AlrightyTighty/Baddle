@@ -1,6 +1,7 @@
 import { Client, QueryResult } from "pg";
 import { genSalt, hash } from "bcrypt";
 import { v4 } from "uuid";
+import { UserInfo } from "./users/route"
 
 const NUM_SALT_ROUNDS = 10;
 
