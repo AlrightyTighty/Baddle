@@ -1,10 +1,10 @@
 import WebSocket, { RawData } from "ws";
-import { IncomingMessage } from "node:http";
 
 import { parse } from "url";
 
 import { Player } from "./player";
 import { Game } from "./game";
+import { NextRequest, NextResponse } from "next/server";
 
 // message formats:
 
@@ -108,7 +108,11 @@ const handleClose = (uuid: string) => {
   game.removePlayer(player);
 };
 
-export function SOCKET(connection: WebSocket, request: IncomingMessage) {
+export function GET() {
+  return new NextResponse("websocket only :(", { status: 411 });
+}
+
+export function SOCKET(connection: WebSocket, request: NextRequest) {
   if (!request.url) return;
   const parsedUrl = parse(request.url, true);
 

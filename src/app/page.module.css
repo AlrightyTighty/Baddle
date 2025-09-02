@@ -19,13 +19,11 @@
   }
 }
 
-@media (min-width: 830) {
-  .title-text {
-    height: 130px;
-    width: auto;
-    object-fit: contain;
-    display: block;
-  }
+.title-text {
+  height: 130px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
 .home-page {

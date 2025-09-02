@@ -23,8 +23,6 @@ const PASSWORD_VERIFY_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$
 
 const EMAIL_VERIFY_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
-const JWT_PRIVATE_KEY = process.env.jwtPrivateKey;
-
 export const POST = async (request: NextRequest) => {
   const body: CreateUserInfo = await request.json();
   if (!body.username) return new Response("A username must be provided.", { status: 400 });

@@ -40,7 +40,7 @@ export const POST = async (request: NextRequest) => {
     return new Response("Failed to retrieve user info from headers", {
       status: 400,
     });
-  const body: UserInfo = JSON.parse(userInfo).payload;
+  const body: UserInfo = JSON.parse(userInfo);
 
   // create verification link
 
@@ -49,15 +49,9 @@ export const POST = async (request: NextRequest) => {
   const result = await makeVerificationLink(body.id);
   if (!result) return new Response("Couldn't make code", { status: 500 });
 
-  const isUserVerified = (
-    await queryDB<{ verified: boolean }>(
-      `SELECT "verified" FROM "user" WHERE "id" = $1;`,
-      [body.id]
-    )
-  )[0].verified;
+  const isUserVerified = (await queryDB<{ verified: boolean }>(`SELECT "verified" FROM "user" WHERE "id" = $1;`, [body.id]))[0].verified;
 
-  if (isUserVerified)
-    return new Response("User is already verified", { status: 403 });
+  if (isUserVerified) return new Response("User is already verified", { status: 403 });
 
   const uuid_code = result.rows[0].verification_code;
 
@@ -79,22 +73,14 @@ export const POST = async (request: NextRequest) => {
 
 export const GET = async (request: NextRequest) => {
   const code = request.nextUrl.searchParams.get("verificationCode");
-  if (!code)
-    return new Response("No verification code provided", { status: 400 });
+  if (!code) return new Response("No verification code provided", { status: 400 });
 
   try {
     const verificationInfoQuery = `SELECT * FROM "verification_code" WHERE verification_code = $1;`;
-    const verificationInfo = (
-      await queryDB<VerificationCodeInfo>(verificationInfoQuery, [code])
-    )[0];
-    if (!verificationInfo)
-      return new Response("Account not found.", { status: 404 });
+    const verificationInfo = (await queryDB<VerificationCodeInfo>(verificationInfoQuery, [code]))[0];
+    if (!verificationInfo) return new Response("Account not found.", { status: 404 });
 
-    if (new Date().getTime() - verificationInfo.time_issued.getTime() > 90000)
-      return new Response(
-        "Expired verification code. Please generate a new one",
-        { status: 410 }
-      );
+    if (new Date().getTime() - verificationInfo.time_issued.getTime() > 90000) return new Response("Expired verification code. Please generate a new one", { status: 410 });
 
     const verifyUserQuery = `UPDATE "user" SET verified = TRUE WHERE id = $1;`;
     await queryDB(verifyUserQuery, [verificationInfo.user_id]);
