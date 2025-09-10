@@ -1,6 +1,17 @@
-.game-board {
-  display: grid;
-  grid-gap: 5px;
-  grid-template-rows: 100px 100px 100px 100px 100px 100px;
-  grid-template-columns: 100px 100px 100px 100px 100px;
+@media (min-width: 1000px) {
+  .game-board {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: 100px 100px 100px 100px 100px 100px;
+    grid-template-columns: 100px 100px 100px 100px 100px;
+  }
+}
+
+@media (max-width: 999px) {
+  .game-board {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-rows: 8vw 8vw 8vw 8vw 8vw 8vw;
+    grid-template-columns: 8vw 8vw 8vw 8vw 8vw;
+  }
 }

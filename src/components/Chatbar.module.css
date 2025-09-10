@@ -1,8 +1,32 @@
 .chatbox {
   background-color: #2f335d;
   width: 400px;
-  height: 630px;
   padding: 20px;
+}
+
+@media (min-width: 1200px) {
+  .chatbox {
+    width: 400px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .chatbox {
+    width: calc((100vw - 600px) / 2);
+    padding: 10px;
+  }
+}
+
+@media (max-height: 667px) {
+  .chatbox {
+    height: 85vh;
+  }
+}
+
+@media (min-height: 668px) {
+  .chatbox {
+    height: 630px;
+  }
 }
 
 .chat-messages {

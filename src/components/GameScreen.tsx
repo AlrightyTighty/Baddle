@@ -36,7 +36,12 @@ interface Game {
 }
 
 interface GameScreenProps {
-  queryParams: { name: string; makeRoom: string; roomCode: string; selectedIcon: number };
+  queryParams: {
+    name: string;
+    makeRoom: string;
+    roomCode: string;
+    selectedIcon: number;
+  };
 }
 
 const test_keyboard: { [key: string]: number } = {};
@@ -48,13 +53,19 @@ for (const letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ") {
 const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
   const WS_URL = "wss://baddle-63991322723.us-south1.run.app/api/play";
 
-  if (queryParams.name.toLowerCase() == "tralalero tralala" || queryParams.name.toLowerCase() == "tralalero")
+  if (
+    queryParams.name.toLowerCase() == "tralalero tralala" ||
+    queryParams.name.toLowerCase() == "tralalero"
+  )
     queryParams.selectedIcon = 8;
 
   if (queryParams.name == "finger" || queryParams.name == "Mike Ehrmantraut")
     queryParams.selectedIcon = 9;
 
-  if (queryParams.name.toLowerCase() == "fariha" || queryParams.name.toLowerCase() == "fariri")
+  if (
+    queryParams.name.toLowerCase() == "fariha" ||
+    queryParams.name.toLowerCase() == "fariri"
+  )
     queryParams.selectedIcon = 10;
 
   if (queryParams.name.toLocaleLowerCase() == "cutze")
@@ -109,7 +120,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   // awesome!
 
-  const [currentTime, setCurrentTime] = useState(180)
+  const [currentTime, setCurrentTime] = useState(180);
 
   const removeMessage = (messages: string[]) => {
     const newMessages = [...messages];
@@ -134,7 +145,9 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
     console.log(message);
 
     if (message.id == 5) {
-      const playerIndex = players.current.findIndex((player) => player.uuid == message.uuid);
+      const playerIndex = players.current.findIndex(
+        (player) => player.uuid == message.uuid
+      );
       const newPlayers = [...players.current];
       newPlayers[playerIndex] = message.player;
       players.current = newPlayers;
@@ -142,7 +155,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
     if (message.id == 7) {
       players.current = message.players;
-      if (self.current == null) self.current = message.players[message.players.length - 1];
+      if (self.current == null)
+        self.current = message.players[message.players.length - 1];
       else
         self.current = message.players.filter((p: any) => {
           if (!self.current) return false;
@@ -158,7 +172,10 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
       setWords(words);
       setCurrentWord("");
       for (let i = 0; i < 5; i++) {
-        keyStates[message.guess[i].toUpperCase()] = message.hints[i] > keyStates[message.guess[i].toUpperCase()] ? message.hints[i] : keyStates[message.guess[i].toUpperCase()];
+        keyStates[message.guess[i].toUpperCase()] =
+          message.hints[i] > keyStates[message.guess[i].toUpperCase()]
+            ? message.hints[i]
+            : keyStates[message.guess[i].toUpperCase()];
       }
 
       setKeyStates(keyStates);
@@ -178,13 +195,16 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
       ]);
       setWords(["", "", "", "", "", ""]);
       setKeyStates(Object.assign({}, test_keyboard));
-      for (const player of players.current) player.bestGuessHint = [0, 0, 0, 0, 0];
+      for (const player of players.current)
+        player.bestGuessHint = [0, 0, 0, 0, 0];
       currentRow.current = 0;
       displayServerMessage("Round Starting!");
-      if (timerRef.current)
-        clearInterval(timerRef.current)
+      if (timerRef.current) clearInterval(timerRef.current);
       setCurrentTime(game.current.options.roundLength);
-      timerRef.current = setInterval(() => setCurrentTime((currentTime) => currentTime - 1), 1000);
+      timerRef.current = setInterval(
+        () => setCurrentTime((currentTime) => currentTime - 1),
+        1000
+      );
     }
 
     if (message.id == 9) {
@@ -194,7 +214,9 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
     if (message.id == 4) {
       console.log("Received message: " + message);
       const newChatMessages = [...chatMessages];
-      const playerWhoAdded = players.current.find((player) => player.uuid == message.uuid);
+      const playerWhoAdded = players.current.find(
+        (player) => player.uuid == message.uuid
+      );
 
       newChatMessages.unshift(playerWhoAdded?.name + ": " + message.message);
       setChatMessages(newChatMessages);
@@ -216,18 +238,27 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
           players.current[i].bestGuessHint = [0, 0, 0, 0, 0];
           players.current[i].score = 0;
         }
-      }, 6000)
+      }, 6000);
     }
 
     lastInterpretedMessage.current = message;
   };
 
-  if (lastJsonMessage && JSON.stringify(lastJsonMessage) != JSON.stringify(lastInterpretedMessage.current)) handleMessage(lastJsonMessage);
+  if (
+    lastJsonMessage &&
+    JSON.stringify(lastJsonMessage) !=
+      JSON.stringify(lastInterpretedMessage.current)
+  )
+    handleMessage(lastJsonMessage);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!game.current.started || isTyping.current) return;
-      if (currentWord.length < 5 && event.key.length == 1 && /^[a-zA-Z]+$/.test(event.key)) {
+      if (
+        currentWord.length < 5 &&
+        event.key.length == 1 &&
+        /^[a-zA-Z]+$/.test(event.key)
+      ) {
         setCurrentWord(currentWord + event.key.toUpperCase());
       } else if (currentWord.length > 0 && event.key == "Backspace") {
         setCurrentWord(currentWord.substring(0, currentWord.length - 1));
@@ -254,7 +285,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-  }, [timerRef, currentTime])
+  }, [timerRef, currentTime]);
 
   const startGame = () => {
     sendJsonMessage({
@@ -269,8 +300,10 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
   const onSettingsChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Settings Changed!");
     const newSettings: GameOptions = game.current.options;
-    if (event.target.name == "num-rounds") newSettings.numRounds = parseInt(event.target.value);
-    else if (event.target.name == "round-length") newSettings.roundLength = parseInt(event.target.value);
+    if (event.target.name == "num-rounds")
+      newSettings.numRounds = parseInt(event.target.value);
+    else if (event.target.name == "round-length")
+      newSettings.roundLength = parseInt(event.target.value);
     else newSettings.allowLateJoin = event.target.checked;
 
     sendJsonMessage({ id: 2, options: newSettings });
@@ -278,9 +311,18 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
 
   return (
     <>
-      {!showPodium && self.current && self.current.isHost && !game.current.started && <SettingsPane roomID={game.current.code} onFormChanged={onSettingsChanged} startGame={startGame} />}
+      {!showPodium &&
+        self.current &&
+        self.current.isHost &&
+        !game.current.started && (
+          <SettingsPane
+            roomID={game.current.code}
+            onFormChanged={onSettingsChanged}
+            startGame={startGame}
+          />
+        )}
       <div className={styles["game-screen"]}>
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", width: "520px", gap: "60px", marginTop: "80px" }}>
+        <div className={styles["game-screen-center"]}>
           <GameBoard words={words} hints={hints} />
           <Keyboard keys={keyStates} />
         </div>
@@ -300,12 +342,23 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
         })}
       </div>
       <PlayerList players={players.current} />
-      {game.current && game.current.started && <p className={styles["timer"]}>{Math.floor(currentTime / 60) + ":" + (currentTime % 60 < 10 ? "0" : "") + currentTime % 60}</p>}
+      {game.current && game.current.started && (
+        <p className={styles["timer"]}>
+          {Math.floor(currentTime / 60) +
+            ":" +
+            (currentTime % 60 < 10 ? "0" : "") +
+            (currentTime % 60)}
+        </p>
+      )}
       {showPodium && (
         <Winscreen
           winner1={players.current[0]}
-          winner2={players.current.length > 1 ? players.current[1] : players.current[0]}
-          winner3={players.current.length > 2 ? players.current[2] : players.current[0]}
+          winner2={
+            players.current.length > 1 ? players.current[1] : players.current[0]
+          }
+          winner3={
+            players.current.length > 2 ? players.current[2] : players.current[0]
+          }
         />
       )}
     </>

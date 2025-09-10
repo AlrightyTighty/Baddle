@@ -10,7 +10,7 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 830) {
+@media (max-width: 830px) {
   .title-text {
     height: auto;
     width: 90vw;
@@ -19,11 +19,13 @@
   }
 }
 
-.title-text {
-  height: 130px;
-  width: auto;
-  object-fit: contain;
-  display: block;
+@media (min-width: 831px) {
+  .title-text {
+    height: 130px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
 }
 
 .home-page {
@@ -34,6 +36,18 @@
   gap: 60px;
   align-items: center;
   justify-content: center;
+}
+
+@media (max-height: 800px) {
+  .home-page {
+    height: 800px;
+  }
+}
+
+@media (min-height: 801px) {
+  .home-page {
+    height: calc(100vh - 16px);
+  }
 }
 
 .intro-text {

@@ -1,10 +1,21 @@
 .game-screen {
   width: 95vw;
-  height: 95vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
+}
+
+@media (min-height: 800px) {
+  .game-screen {
+    height: 95vh;
+  }
+}
+
+@media (max-height: 799px) {
+  .game-screen {
+    height: 800px;
+  }
 }
 
 .server-message-box {
@@ -19,7 +30,7 @@
 }
 
 .chat-message-area {
-  position: absolute;
+  position: fixed;
   right: 20px;
   bottom: 20px;
 }
@@ -33,4 +44,14 @@
   font-family: inter;
   color: white;
   font-size: 64pt;
+}
+
+.game-screen-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 80px;
+  height: 800px;
+  justify-content: space-evenly;
+  align-items: center;
 }
