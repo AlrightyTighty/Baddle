@@ -1,0 +1,29 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.intro {
+  margin-left: 30vw;
+  margin-right: 30vw;
+  width: 768px;
+  height: 432px;
+  display: flex;
+  justify-content: center;
+  font-family: inter;
+  color: white;
+  flex-wrap: wrap;
+}
+
+.title-text {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.intro-text {
+  font-size: 24pt;
+  text-align: center;
+}

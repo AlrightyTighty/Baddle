@@ -247,7 +247,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ queryParams }) => {
   if (
     lastJsonMessage &&
     JSON.stringify(lastJsonMessage) !=
-      JSON.stringify(lastInterpretedMessage.current)
+    JSON.stringify(lastInterpretedMessage.current)
   )
     handleMessage(lastJsonMessage);
 

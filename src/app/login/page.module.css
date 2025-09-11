@@ -1,2 +1,37 @@
 .main-content {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  justify-content: center;
+}
+
+@media (max-width: 699px) {
+  .main-content {
+    width: 100vw;
+  }
+}
+
+@media (min-width: 700px) {
+  .main-content {
+    width: 700px;
+  }
+}
+
+@media (min-height: 801px) {
+  .main-content {
+    height: 100vh;
+  }
+}
+
+@media (max-height: 800px) {
+  .main-content {
+    height: 800px;
+  }
+}
+
+.login-image {
+  width: 100%;
+  height: auto;
 }

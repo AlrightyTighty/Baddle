@@ -1,2 +1,33 @@
 .login-form {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.lif-text-input {
+  height: 75px;
+  width: 100%;
+  border-radius: 16px;
+  font-size: 32px;
+  font-family: inter;
+  text-align: center;
+  font-weight: 300;
+}
+
+.lif-submit {
+  height: 75px;
+  border-radius: 16px;
+  font-size: 32px;
+  width: 70%;
+  background-color: #38394b;
+  border-color: transparent;
+  color: white;
+  font-weight: 600;
+  font-family: inter;
+}
+
+.login-form input::placeholder {
+  color: #d3d3d3;
 }

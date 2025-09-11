@@ -7,6 +7,7 @@ const page = () => {
   return <div className={styles['main-content']}>
     <Image src={loginGraphic} alt="login image" className={styles['login-image']} />
     <LoginForm />
+
   </div>
 }
 
